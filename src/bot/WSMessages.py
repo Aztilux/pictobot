@@ -24,12 +24,12 @@ class WSMessages:
         # verified / authed    
         elif data['type'] == 'sv_nameVerified':
             await self.sv_nameVerified()
-        # room stats
+        # todo room stats 
         elif data['type'] == 'sv_roomIds':
-            pass    
+            print(msg)
         # joined room  
         elif data['type'] == 'sv_roomData':
-            pass             
+            await self.sv_roomData(msg)         
         #unhandled messages  
         else:
             print(msg)    
@@ -59,5 +59,15 @@ class WSMessages:
             print(f"[-] {username}")
     
     async def sv_nameVerified(self):
-        print(f'Logged in successfully as {self.bot.username}, color {self.bot.color}, to {self.bot.room}')
+        print(f'Logged in successfully as {self.bot.username}, color {self.bot.color}')
         await self.bot.join_room()
+
+    async def sv_roomData(self, data):
+        data = json.loads(data)
+        final = f'Joined room {data['id']}'
+        try:
+            if data['private'] == True:
+                final = '[PRIVATE] ' + final
+        except:
+            pass                
+        print(final)    

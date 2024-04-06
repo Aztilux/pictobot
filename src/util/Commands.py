@@ -5,6 +5,7 @@ import asyncio
 class Commands: 
     def __init__(self, bot):
         self.bot = bot
+        self.freecanvas = []
 
     async def handlecommand(self, username: str, raw, command: str):
         raw = json.loads(raw)
@@ -44,13 +45,13 @@ class Commands:
             msg = [{"text":"Argument is not number!","x":113,"y":211}]
             await self.bot.sendmsg(textboxes=msg, lines=1)
             return
-        line = await self.bot.draw.line(x1, y1, x2, y2, type)
+        line = await line(x1, y1, x2, y2, type)
         for point in line:
-            self.bot.draw.freecanvas.append(point)
-        await self.bot.sendmsg(drawing=self.bot.draw.freecanvas)
+            self.freecanvas.append(point)
+        await self.bot.sendmsg(drawing=self.freecanvas)
     
     async def clear(self):
-       self.bot.draw.freecanvas = []
+       self.freecanvas = []
        await self.bot.sendmsg(textboxes=[{"text":"Canvas clear!","x":113,"y":211}])    
 
     async def help(self):

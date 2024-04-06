@@ -4,15 +4,11 @@ import json
 
 from bot.Bot import Bot
 
-BOTNAME = 'BOT'
-BOTCOLOR = 4849907
-
-# ----------------------------------------------- #          
-        
-
-async def main():
+async def init():
+    BOTNAME = 'BOT'
+    BOTCOLOR = 4849907
     bot = Bot(BOTNAME, BOTCOLOR)
     await bot.connection.connect()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(init())
